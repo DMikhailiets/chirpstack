@@ -13,9 +13,8 @@ const LoginForm = (props: any) => {
   const onFinish = (values: any) => {
     setButtonType(true)
     props.loginUser(values)
-    .then((data: any) => {
-      console.log('hi')
-  }).finally(() => setButtonType(false))
+    .then((data: any) => window.location.reload())
+    .finally(() => setButtonType(false))
 }
   const onFinishFailed = (errorInfo: any) => {
     console.log('Failed:', errorInfo)

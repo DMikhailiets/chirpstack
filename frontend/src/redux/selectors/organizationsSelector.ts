@@ -1,8 +1,9 @@
 import { AppState } from './../store'
 import { createSelector } from "reselect"
 
+
 const getOrganizations = (state: AppState) => {
-    return state.organizations
+    return state.organizationsReducer.organizations
 }
 
 export const fetchOrganizations = createSelector(getOrganizations, (organizations: any) => {

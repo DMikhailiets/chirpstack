@@ -53,7 +53,6 @@ export const loginUser = (authData: any) =>  (dispatch: redux.Dispatch) =>  {
         .then((response) => {
             resolve()
             window.localStorage.setItem("token", response.data.jwt)
-            window.location.reload();
             notification({
                 text: "nice to meet you!)",
                 type: 'success',

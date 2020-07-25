@@ -6,7 +6,7 @@ import thunkMiddleware from 'redux-thunk';
 
 let rootReducer = combineReducers({
   loginReducer: loginReducer,
-  organizations: organizationsReducer
+  organizationsReducer: organizationsReducer
 })
 
 type RootReducer = typeof rootReducer

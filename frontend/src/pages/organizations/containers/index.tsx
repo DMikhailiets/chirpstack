@@ -1,11 +1,13 @@
 import Organization from "../components/organization";
 import { connect } from "react-redux";
-import { createOrganization } from "../../../redux/reducers/organizationsReducer";
+import { createOrganization, getOrganizations } from "../../../redux/reducers/organizationsReducer";
 import { AppState } from "../../../redux/store";
+import { fetchOrganizations } from "../../../redux/selectors";
 
-let mapStateToProp = (state: AppState) =>({
+let mapStateToProps = (state: AppState) =>({
+    organizations: fetchOrganizations(state)
 })
 
-export default connect(null, {createOrganization})(Organization)
+export default connect(mapStateToProps, {createOrganization, getOrganizations})(Organization)
 
 

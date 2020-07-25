@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Form, Input, Button, Checkbox, Switch, Select, Row, Col, Layout } from 'antd'
+import { Form, Input, Button, Checkbox, Switch, Modal, Select, Row, Col, Layout } from 'antd'
 import style from './form.module.scss'
 import { Block } from '../../../components'
 import notification from '../../../components/Notification'
@@ -7,7 +7,13 @@ import { NavLink, Redirect } from 'react-router-dom'
 
 const { Option } = Select
 
-const CreateOrganizationForm: React.FC = (props: any) => { 
+type CreateOrganizationType = {
+  visible: boolean,
+  createOrganization: Function,
+  setNewOrganizationFlag: Function
+}
+
+const CreateOrganizationForm: React.FC<CreateOrganizationType> = ({visible, createOrganization, setNewOrganizationFlag}) => { 
     const[disabled, setButtonType] = useState(false)
     // const[canHaveGateways, setCanHaveGateways] = useState(false)
     // const setCanHaveGateways = () => {
@@ -16,7 +22,7 @@ const CreateOrganizationForm: React.FC = (props: any) => {
     const onFinish = (values: any) => {
         setButtonType(true)
         console.log(values)
-        props.createOrganization(values).then((data: any) => {
+        createOrganization(values).then((data: any) => {
           console.log(data)
             if(data === undefined){
               setButtonType(false)
@@ -48,14 +54,13 @@ const CreateOrganizationForm: React.FC = (props: any) => {
       }
     
  return(
-    <Layout className={style.content_wrapper} style={{ minHeight: '100vh' }}>
-    <Row>
-      <Col span={8}></Col>  
-      <Col className={style.login_form_wrapper} span={8}>
-        <Block className={style.block}>
-            <div>
-              <h2>Create organization</h2>
-            </div> 
+  <Modal
+    title="Create organization"
+    visible={visible}
+    onOk={onFinish}
+    okText={'Allow'}
+    onCancel={() => setNewOrganizationFlag(false)}
+> 
             <Form
               name="basic"
               initialValues={{ remember: true }}
@@ -103,18 +108,11 @@ const CreateOrganizationForm: React.FC = (props: any) => {
               </Form.Item>
               
               <Form.Item 
-              >
-                <Button type="primary" htmlType="submit" disabled={disabled}>
-                  Allow
-                </Button>
+              > 
               </Form.Item>
             </Form>        
-        </Block>
+</Modal>
         
-      </Col>  
-      <Col span={8}></Col>  
-    </Row> 
-  </Layout>
  )
 }
 
