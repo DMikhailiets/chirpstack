@@ -3,13 +3,11 @@ import { default as axios } from '../core/axios';
 
 export const authAPI = {
     authUser:  (authData: any) => {
-        let response =  axios.post('/api/internal/login', authData)
-            .then((res) => res
+        let response =  axios.post('/API/login', authData)
+            .then((res: any) => res
             )
-            .catch((error) => {
-                return {
-                    status:error.response.status
-                }
+            .catch((error: any) => {
+              throw new Error('bla')
             })
             return response
     },
