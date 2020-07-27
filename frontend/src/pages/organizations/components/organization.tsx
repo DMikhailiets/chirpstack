@@ -4,6 +4,8 @@ import style from './organization.module.scss'
 import { Empty, PageHeader } from 'antd'
 import { Redirect } from 'react-router-dom'
 import { PlusCircleTwoTone } from '@ant-design/icons'
+import { Organization } from '../../../components/Organization'
+import ErrorBoundary from '../../../core/ErrorBoundary'
 
 type OrganizationsProps = {
     createOrganization: Function,
@@ -11,15 +13,17 @@ type OrganizationsProps = {
     organizations: any
 }
 
-const Organization: React.FC<OrganizationsProps> = ({createOrganization, getOrganizations, organizations}) => { 
+const OrganizationsPage: React.FC<OrganizationsProps> = ({createOrganization, getOrganizations, organizations}) => { 
  const[newOrganizationFlag, setNewOrganizationFlag] = useState(false)
  useEffect(() => {
     if (organizations === null) {
-       //getOrganizations() 
+       getOrganizations() 
     }
  },[organizations])
+ 
     return (
-        <div className={style.content_wrapper}>
+        <ErrorBoundary errorMessage={'errorMessage'} errorStatus={1}>
+            <div className={style.content_wrapper}>
             <PageHeader
               className="site-page-heade"
               title="Organizations:"
@@ -29,13 +33,26 @@ const Organization: React.FC<OrganizationsProps> = ({createOrganization, getOrga
             
             <CreateOrganizationForm setNewOrganizationFlag={setNewOrganizationFlag}visible={newOrganizationFlag}/>
             {
-                organizations == null 
+                organizations === null 
                 ? <Empty/> 
-                : <div>organizations list</div> 
+                : <div style={{display: 'flex', flexWrap: 'wrap'}}>
+                    {organizations.map((organization: any) => 
+                                                              <Organization 
+                                                                    key={organization.id}
+                                                                    id={organization.id} 
+                                                                    displayName={organization.displayName} 
+                                                                    createdAt={organization.createdAt}
+                                                              />
+                                                            
+                                                              )
+                    }
+                  </div> 
             }
         </div>
+        </ErrorBoundary>
+        
     )
 }
 
-export default Organization
+export default OrganizationsPage
 

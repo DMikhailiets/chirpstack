@@ -12,8 +12,10 @@ import { NavLink, Redirect } from 'react-router-dom';
 import { Route } from 'react-router-dom';
 import notification from '../../../components/Notification';
 import { Organizations } from '../../organizations';
+import ErrorBoundary from 'antd/lib/alert/ErrorBoundary';
 
 const { Sider } = Layout;
+
 
 const Home = (props:any) => {
       // useEffect(() => {

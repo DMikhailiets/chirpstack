@@ -1,1 +1,2 @@
-export { default as fetchOrganizations } from './organizationsSelector'
+export  { fetchOrganizations }  from './organizationsSelector'
+export  { fetchOrganizationsUsers }  from './organizationsSelector'
