@@ -23,6 +23,12 @@ export const organizationsAPI = {
             .then((res: any) => res)
             .catch((error: Error) => {throw new Error()})
         return response
+    },
+    createUser: (data:any) => {
+        let response = axios.post(`api/user`, data)
+            .then((res: any) => res)
+            .catch((error: Error) => {throw new Error()})
+        return response
     }
 }
 export default organizationsAPI

@@ -11,19 +11,23 @@ const { Option } = Select
 type CreateOrganizationType = {
   visible: boolean,
   createOrganization: Function,
-  setNewOrganizationFlag: Function
+  setNewOrganizationFlag: Function,
+  getOrganizations: Function
 }
 
 
-const CreateOrganizationForm: React.FC<CreateOrganizationType> = ({visible, createOrganization, setNewOrganizationFlag}) => { 
-    const[disabled, setButtonType] = useState(false)
+const CreateOrganizationForm: React.FC<CreateOrganizationType> = ({getOrganizations, visible, createOrganization, setNewOrganizationFlag}) => { 
+  const [form] = Form.useForm()  
+  const[disabled, setButtonType] = useState(false)
     // const[canHaveGateways, setCanHaveGateways] = useState(false)
     // const setCanHaveGateways = () => {
 
     // }
     const onFinish = (values: any) => {
-      setButtonType(true)
-      console.log(values)
+      createOrganization(values)
+      getOrganizations()
+      form.resetFields()
+      setNewOrganizationFlag(false)
     }
     const onFinishFailed = (errorInfo: any) => {
       console.log('Failed:', errorInfo)
@@ -34,10 +38,11 @@ const CreateOrganizationForm: React.FC<CreateOrganizationType> = ({visible, crea
   <Modal
     title="Create organization"
     visible={visible}
-    onOk={onFinish}
     onCancel={() => setNewOrganizationFlag(false)}
+    footer={false}
   > 
     <Form
+      form={form}
       name="basic"
       initialValues={{ remember: true }}
       onFinish={onFinish}
@@ -46,7 +51,6 @@ const CreateOrganizationForm: React.FC<CreateOrganizationType> = ({visible, crea
     <Form.Item 
         name="canHaveGateways" 
         label="canHaveGateways" 
-        // rules={[{ }]}
     >    
     <Switch />
     </Form.Item>
@@ -57,7 +61,7 @@ const CreateOrganizationForm: React.FC<CreateOrganizationType> = ({visible, crea
       >
         <Input />
       </Form.Item>
-      <Form.Item
+      {/* <Form.Item
         label="id"
         name="id"
         rules={[{ required: true, message: 'Number is required!' },
@@ -74,7 +78,7 @@ const CreateOrganizationForm: React.FC<CreateOrganizationType> = ({visible, crea
         ]}
       >
         <Input/>
-      </Form.Item>
+      </Form.Item> */}
       <Form.Item
         label="name"
         name="name"

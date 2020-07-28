@@ -1,4 +1,4 @@
-import components from '../components/createOrganizationForm'
+import components from '../components/createUserForm'
 import { connect } from 'react-redux'
 import createOrganization from '../../../redux/reducers/organizationsReducer'
 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import { CreateOrganizationForm } from '../../../modules'
+import { CreateOrganizationForm, CreateUserForm } from '../../../modules'
 import style from './organization.module.scss'
-import { Empty, PageHeader } from 'antd'
+import { Empty, Card, PageHeader } from 'antd'
 import { Redirect } from 'react-router-dom'
 import { PlusCircleTwoTone } from '@ant-design/icons'
 import { Organization } from '../../../components/Organization'
@@ -10,13 +10,14 @@ import ErrorBoundary from '../../../core/ErrorBoundary'
 type OrganizationsProps = {
     createOrganization: Function,
     getOrganizations: Function,
-    organizations: any
+    organizations: any,
+    createUser: Function
 }
 
-const OrganizationsPage: React.FC<OrganizationsProps> = ({createOrganization, getOrganizations, organizations}) => { 
+const OrganizationsPage: React.FC<OrganizationsProps> = ({createUser, createOrganization, getOrganizations, organizations}) => { 
  const[newOrganizationFlag, setNewOrganizationFlag] = useState(false)
  useEffect(() => {
-    if (organizations === null) {
+    if (organizations.length === 0) {
        getOrganizations() 
     }
  },[organizations])
@@ -30,21 +31,28 @@ const OrganizationsPage: React.FC<OrganizationsProps> = ({createOrganization, ge
               subTitle={<PlusCircleTwoTone onClick={() => setNewOrganizationFlag(true)}
               style={{backgroundSize: '450px'}}/>}
             /> 
-            
-            <CreateOrganizationForm setNewOrganizationFlag={setNewOrganizationFlag}visible={newOrganizationFlag}/>
+            <CreateOrganizationForm getOrganizations={getOrganizations} createOrganization={createOrganization} setNewOrganizationFlag={setNewOrganizationFlag}visible={newOrganizationFlag}/>
             {
                 organizations === null 
-                ? <Empty/> 
+                ? <Card 
+                style={{ marginLeft: 15, marginRight: 15, width: '100%', height: '80vh' }}
+                loading={organizations === null} 
+            /> 
                 : <div style={{display: 'flex', flexWrap: 'wrap'}}>
-                    {organizations.map((organization: any) => 
+                    {
+                    organizations.length === 0
+                    ? <div style={{display: 'flex', justifyContent: 'center', flexGrow: 1}}><Empty/></div> 
+                    : organizations.map((organization: any) => 
                                                               <Organization 
+                                                                    createUser={createUser}
+                                                                    getOrganizations={getOrganizations}
+                                                                    organizations={organizations}
                                                                     key={organization.id}
                                                                     id={organization.id} 
                                                                     displayName={organization.displayName} 
                                                                     createdAt={organization.createdAt}
                                                               />
-                                                            
-                                                              )
+                                                            )
                     }
                   </div> 
             }
