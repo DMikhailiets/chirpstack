@@ -1,1 +1,3 @@
-export { default as Organizations} from './containers'
+import  Organizations from './containers'
+
+export default Organizations

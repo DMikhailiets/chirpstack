@@ -1,3 +1,4 @@
+import React from 'react'
 import { fetchOrganizationsUsers } from './../../../redux/selectors/organizationsSelector';
 import { AppState } from './../../../redux/store';
 import { getOrganizationsUsers } from './../../../redux/reducers/organizationsReducer';
@@ -8,4 +9,4 @@ let mapStateToProps = (state: AppState) => ({
     users: fetchOrganizationsUsers(state)
 })
 
-export default connect(mapStateToProps,{getOrganizationsUsers})(Organization)
+export default connect(mapStateToProps,{getOrganizationsUsers})(React.memo(Organization))

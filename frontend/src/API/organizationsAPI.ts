@@ -1,5 +1,6 @@
 
 import { default as axios } from '../core/axios';
+import Notification from '../components/Notification';
 
 
 
@@ -8,13 +9,23 @@ export const organizationsAPI = {
         let response = axios.post('/api/chirpOrganization', organizationData)
             .then((res: any) => res
             )
-            .catch((error: Error) => {throw new Error()})
+            .catch((error: Error) => {
+                throw new Error(),
+                console.log(error)
+            })
         return response    
     },
     getOrganizations: () => {
         let response = axios.get('/api/chirpOrganization')
             .then((res: any) => res)
-            .catch((error: Error) => {throw new Error()})
+            .catch((error: any) => {
+                throw new Error(),
+                Notification({
+                    text: error.response.data.error,
+                    type: 'error',
+                    title: "Oops..."
+                  })
+                })
         return response
     },
     getOrganizationsUsers: (id:any) => {
@@ -25,7 +36,7 @@ export const organizationsAPI = {
         return response
     },
     createUser: (data:any) => {
-        let response = axios.post(`api/user`, data)
+        let response = axios.post(`api/addUserToOrg`, data)
             .then((res: any) => res)
             .catch((error: Error) => {throw new Error()})
         return response

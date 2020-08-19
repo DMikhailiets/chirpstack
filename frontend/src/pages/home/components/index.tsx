@@ -1,18 +1,19 @@
 import React, { useState, useEffect } from 'react'
-import style from './main_page.module.css'
+// import style from './main_page.module.css'
 import { Layout, Menu, Badge, Row, Col } from 'antd';
 import {
-  SettingOutlined,
   LogoutOutlined,
-  FileDoneOutlined,
-  LoadingOutlined,
-  AppstoreOutlined
+  AppstoreOutlined,
+  ClusterOutlined,
+  ProfileOutlined,
+  FontColorsOutlined,
+  SnippetsOutlined,
 } from '@ant-design/icons';
 import { NavLink, Redirect } from 'react-router-dom';
 import { Route } from 'react-router-dom';
 import notification from '../../../components/Notification';
-import { Organizations } from '../../organizations';
 import ErrorBoundary from 'antd/lib/alert/ErrorBoundary';
+import { ServiceProfilesPage, DevicesPage, Organizations } from '../../../pages';
 
 const { Sider } = Layout;
 
@@ -36,7 +37,7 @@ const Home = (props:any) => {
               setEditMode(false);
           }
       }
-      if(!localStorage.token && localStorage.token === undefined){
+      if(!localStorage.token || localStorage.token === undefined){
         return (
           <Redirect to='/'/>
         )
@@ -45,7 +46,7 @@ const Home = (props:any) => {
           return (
           
             <Layout style={{ minHeight: '100vh' }}>
-                <Sider width={130}  collapsedWidth={80} collapsed={collapsed} onCollapse={changeEditMode} onMouseEnter={() => (setEditMode(false))} onMouseLeave={() => (setEditMode(true))}>
+                <Sider width={'12vw'}  collapsedWidth={80} collapsed={collapsed} onCollapse={changeEditMode} onMouseEnter={() => (setEditMode(false))} onMouseLeave={() => (setEditMode(true))}>
                 <div className="logo" />
                 <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline"> 
                   <Menu.Item key="1">
@@ -55,12 +56,30 @@ const Home = (props:any) => {
                     </NavLink>
                   </Menu.Item>
                   <Menu.Item key="2">
-                    <NavLink to="/home/logistics">
-                      <SettingOutlined/>
-                      <span>Settings</span>
+                    <NavLink to="/home/serviceProfiles">
+                    <SnippetsOutlined />
+                      <span>Service Profiles</span>
                     </NavLink>
                   </Menu.Item>
-                  <Menu.Item onClick={() => props.logout()}key="3">
+                  <Menu.Item key="3">
+                    <NavLink to="/home/applications">
+                    <FontColorsOutlined />
+                      <span>Applications</span>
+                    </NavLink>
+                  </Menu.Item>
+                  <Menu.Item key="4">
+                    <NavLink to="/home/deviceProfiles">
+                    <ProfileOutlined />
+                      <span>Device Profiles</span>
+                    </NavLink>
+                  </Menu.Item>
+                  <Menu.Item key="5">
+                    <NavLink to="/home/devices">
+                    <ClusterOutlined />
+                      <span>Devices</span>
+                    </NavLink>
+                  </Menu.Item>
+                  <Menu.Item onClick={() => props.logout()}key="6">
                     <NavLink to="/home/orders">
                     <LogoutOutlined/>
                       <span>Logout</span>
@@ -79,8 +98,9 @@ const Home = (props:any) => {
                 <Col span={4}/>
               </Row> */}
               <Route path="/home/organizations/" render = { () => <Organizations/>}/>
-                <Route path="/home/logistics" render = { () => <div>Hi</div>}/>
-                <Route path="/home/orders" render = { () => <div>Hi</div>}/>
+              <Route path="/home/devices" render = { () => <DevicesPage/>}/>
+              <Route path="/home/serviceProfiles" render = { () => <ServiceProfilesPage/>}/>
+              <Route path="/home/orders" render = { () => <div></div>}/>
               </Layout>
             </Layout>
           );

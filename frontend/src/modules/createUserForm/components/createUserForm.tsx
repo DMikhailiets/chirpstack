@@ -21,10 +21,9 @@ const CreateUserForm: React.FC<CreateOrganizationType> = ({getOrganizations, org
   const[disabled, setButtonType] = useState(false)
   const children: any = []
   organizations.forEach((organization: any) => children.push(<Option value={organization.id}key={organization.id}>{organization.displayName}</Option>))
+  
   const onFinish = (values: any) => {
-    console.log(values)
     createUser(values)
-    getOrganizations()
     form.resetFields()
     setNewUserFormVisible(false)
   }
@@ -42,7 +41,6 @@ const CreateUserForm: React.FC<CreateOrganizationType> = ({getOrganizations, org
      <Form
       form={form}
       name="createUserForm"
-      initialValues={{ remember: true }}
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
     >
@@ -62,18 +60,21 @@ const CreateUserForm: React.FC<CreateOrganizationType> = ({getOrganizations, org
           </Select>
         </Form.Item>
         <Form.Item
+          label="email"
+          name="email"
+          rules={[{ required: true, 
+                    type: 'email',
+                    message: 'Incorrect email' 
+                  }]}
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item
           label="password"
           name="password"
           rules={[{ required: true, message: 'Please input your password!' }]}
         >
           <Input.Password  iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}/>
-        </Form.Item>
-        <Form.Item
-          label="email"
-          name="email"
-          rules={[{ required: true, message: 'Please input your password!' }]}
-        >
-          <Input />
         </Form.Item>
         {/* <Form.Item 
           name="isActive" 

@@ -11,12 +11,6 @@ const initialstate = {
 
 const userReducer = (state: any = initialstate, action: any) => {
     switch(action.type){
-        // case 'SET_USER_DATA': {  
-        //     return {
-        //         ...state,
-        //         ...action.userData,
-        //     }
-        // }
         case 'SET_TOKEN': {
             return {
                 ...state,
@@ -27,20 +21,7 @@ const userReducer = (state: any = initialstate, action: any) => {
     }
 }
 
-
-//const setUserData = (userData: any) => ({type: 'SET_USER_DATA', userData})
 const setToken = (token: string) => ({type: 'SET_TOKEN', token})
-
-
-// export const getMe = (token: any) => async (dispatch: redux.Dispatch) => {
-//     console.log(token)
-//     let response: any = await userAPI.getMe(token)
-//     if (response.status == 200){
-//         dispatch(setUserData(response.data))
-//     } else {
-//         return Error()
-//     }
-// }
 
 export const logout = () => async (dispatch: redux.Dispatch) => {
     window.localStorage.removeItem('token')
@@ -59,8 +40,8 @@ export const loginUser = (authData: any) =>  (dispatch: redux.Dispatch) =>  {
                 title: "Success!",
                 duration: 5
             })
+        
         return response
-            //dispatch(setToken(response.data.token))
         })
         .catch((error: any) => {
             reject()

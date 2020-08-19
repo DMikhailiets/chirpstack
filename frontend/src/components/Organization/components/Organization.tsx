@@ -18,14 +18,14 @@ type OrganizationProps = {
 const Organization: React.FC<OrganizationProps> = ({id, createUser, getOrganizations, getOrganizationsUsers, displayName, organizations, users}) => {
     const[newUserVisible, setNewUserFormVisible] = useState(false)
     useEffect(() => {
-        if(users[id] === undefined ){
+        //if(users[id] === undefined){
             getOrganizationsUsers(id)
-        }
-    },[])
+        //}
+    }, [organizations])
     return (
         <ErrorBoundary>
             <Card 
-            style={{ marginLeft: 15, marginRight: 15, width: 270 }}
+            style={{ marginLeft: 15, marginTop: 15, marginRight: 15, width: 270 }}
             title={displayName} 
             extra={<PlusCircleTwoTone onClick={() => setNewUserFormVisible(true)}/>}
             loading={users[id] === undefined} 

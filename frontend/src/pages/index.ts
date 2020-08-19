@@ -1,2 +1,5 @@
-export { default as LoginPage} from './login'
-export { default as Home} from './home'
+export { default as LoginPage } from './login'
+export { default as Home } from './home'
+export { default as Organizations } from './organizations'
+export { default as DevicesPage } from './devices'
+export { default as ServiceProfilesPage } from './serviceProfiles'

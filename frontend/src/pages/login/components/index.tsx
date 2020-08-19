@@ -1,9 +1,11 @@
-import React, {useState} from 'react'
+import React, {useState, Context} from 'react'
 import { Form, Input, Button, Checkbox,  Row, Col, Layout } from 'antd'
 import style from './login.module.scss'
 import { Block } from '../../../components'
 import notification from '../../../components/Notification'
 import { NavLink, Redirect } from 'react-router-dom'
+
+
 
 const LoginForm = (props: any) => {
   const[disabled, setButtonType] = useState(false)
@@ -21,6 +23,7 @@ const LoginForm = (props: any) => {
   }
 
   return (
+    
     <Layout className={style.content_wrapper} style={{ minHeight: '100vh' }}>
       <Row>
         <Col span={8}></Col>  

@@ -65,9 +65,9 @@ export const createUser = (userData: any) => (dispatch: redux.Dispatch) => {
         let organizations: any = []
         userData.Organizations.map((org: any) => organizations.push({
             "isAdmin": true,
-                    "isDeviceAdmin": true,
-                    "isGatewayAdmin": true,
-                    "organizationID": org
+            "isDeviceAdmin": true,
+            "isGatewayAdmin": true,
+            "organizationID": org
         }))
         organizationsAPI.createUser({
                 "organizations": organizations,
@@ -81,6 +81,7 @@ export const createUser = (userData: any) => (dispatch: redux.Dispatch) => {
                 }
         })
             .then((response: any) =>{
+                getOrganizations()
                 Notification({
                     text: "User was created!)",
                     type: 'success',
@@ -114,6 +115,9 @@ export const createOrganization = (data: any) => (dispatch: redux.Dispatch) => {
                     title: "Success!",
                     duration: 5
                 })
+            })
+            .then(() => {
+                organizationsAPI.getOrganizations()
             })
             .catch((err) => {
                 Notification({

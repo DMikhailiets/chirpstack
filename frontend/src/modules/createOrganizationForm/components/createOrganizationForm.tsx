@@ -44,7 +44,6 @@ const CreateOrganizationForm: React.FC<CreateOrganizationType> = ({getOrganizati
     <Form
       form={form}
       name="basic"
-      initialValues={{ remember: true }}
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
     >
