@@ -1,7 +1,7 @@
 import { devicesReducer } from './reducers/devicesReducer';
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
-import { loginReducer, organizationsReducer, serviceProfileReducer } from './reducers'
+import { loginReducer, organizationsReducer, serviceProfileReducer, applicationsReducer } from './reducers'
 import { composeWithDevTools } from 'redux-devtools-extension';
 import thunkMiddleware from 'redux-thunk';
 
@@ -10,6 +10,7 @@ let rootReducer = combineReducers({
   organizationsReducer,
   devicesReducer,
   serviceProfileReducer,
+  applicationsReducer
 })
 
 type RootReducer = typeof rootReducer
