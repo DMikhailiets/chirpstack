@@ -1,12 +1,10 @@
 import { default as axios } from '../core/axios';
 import Notification from '../components/Notification';
 
-
-
-export const devicesAPI = {
-    getDevices: async () => {
+const deviceProfilesAPI = {
+    getDeviceProfiles: async () => {
         try {
-            let response = await axios.get('/api/devices')
+            let response = await axios.get('/api/deviceProfiles')
             return (response)
         } catch(err) {
             if(err.response){
@@ -33,9 +31,9 @@ export const devicesAPI = {
             }
         }
     },
-    createDevice: async (device: any) => {
+    createDeviceProfiles: async (deviceProfile: any) => {
         try {
-            let response = await axios.post('/api/devices', device)
+            let response = await axios.post('/api/deviceProfiles', deviceProfile)
             Notification({
                 text: 'DeviceProfile was created!',
                 type: 'success',
@@ -68,4 +66,5 @@ export const devicesAPI = {
         }
     },
 }
-export default devicesAPI
+
+export default deviceProfilesAPI

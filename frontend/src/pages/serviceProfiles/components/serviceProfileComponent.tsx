@@ -47,9 +47,10 @@ const ServiceProfile: React.FC<ServiceProfileProps> = ({getOrganizations, organi
                                                                 style={{ marginLeft: 15, marginRight: 15, marginTop: 15, width: 270 }}
                                                                 title={serviceProfile.name}
                                                              >
-                                                                 
+                                                                 <div style={{display: 'flex', flexDirection: 'column', alignItems: 'flex-start'}}>
                                                                  <p>networkServerID: {serviceProfile.networkServerID}</p>
                                                                  <p>organizationID: {serviceProfile.organizationID}</p>
+                                                                 </div>
                                                             </Card>
                                                             )
                     }

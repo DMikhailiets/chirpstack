@@ -33,21 +33,22 @@ export let getDevices = () => async (dispatch: redux.Dispatch) => {
 
 export let createDevice = (device: any) => async (dispatch: redux.Dispatch) => {
     try {
-     let response = await devicesAPI.createDevice({
-        "device": {
-            "applicationID": "1",
-            "devEUI": "e67a5df34bd4dc52",
-            "deviceProfileID": "d48c2780-942e-496e-872b-0621844375b8",
-            "isDisabled": true,
-            "name": "Device1",
-            "referenceAltitude": 0,
-            "skipFCntCheck": true,
-        }
-      })
-     return response 
-    } catch(error){
-        throw new Error(error)
-    } 
+        let response = await devicesAPI.createDevice({
+            "device": {
+              "applicationID": device.applicationID,
+              "description": device.description,
+              "devEUI": device.devEUI,
+              "deviceProfileID": device.deviceProfileID,
+              "name": device.name,//
+              "referenceAltitude": device.referenceAltitude
+            }
+          })
+        response = await devicesAPI.getDevices()
+        dispatch(setDevices(response))
+        return response 
+       } catch(error){
+           
+       } 
  }
 
 

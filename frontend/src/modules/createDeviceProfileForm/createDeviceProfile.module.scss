@@ -1,0 +1,17 @@
+
+.content_wrapper {
+    min-height: 100vh;
+    background-color: white;
+}
+
+.login_form_wrapper{
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.block {
+    margin-top: 25vh;
+}

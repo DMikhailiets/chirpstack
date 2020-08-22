@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Layout, Menu } from 'antd'
 import { NavLink, Redirect } from 'react-router-dom'
 import { Route } from 'react-router-dom'
-import { ServiceProfilesPage, DevicesPage, Organizations, ApplicationsPage } from '../../../pages'
+import { ServiceProfilesPage, DevicesPage, Organizations, ApplicationsPage, DeviceProfilesPage } from '../../../pages'
 import ErrorBoundary from '../../../core/ErrorBoundary';
 import {
   LogoutOutlined,
@@ -59,7 +59,7 @@ const Home = (props:any) => {
                   <Menu.Item key="4">
                     <NavLink to="/home/deviceProfiles">
                     <ProfileOutlined />
-                      <span>Device Profiles</span>
+                      <span>Device profiles</span>
                     </NavLink>
                   </Menu.Item>
                   <Menu.Item key="5">
@@ -81,6 +81,7 @@ const Home = (props:any) => {
               <Route path="/home/devices" render = { () => <DevicesPage/>}/>
               <Route path="/home/serviceProfiles" render = { () => <ServiceProfilesPage/>}/>
               <Route path="/home/applications" render = { () => <ApplicationsPage/>}/>
+              <Route path="/home/deviceProfiles" render = { () => <DeviceProfilesPage/>}/>
               </Layout>
             </Layout>
             </ErrorBoundary>

@@ -26,7 +26,7 @@ export const CreateApplicationForm: React.FC<CreateApplicationType> = ({ organiz
     serviceProfiles.forEach((serviceProfile: any) => serviceProfilesOnSelect.push(<Option 
                                                                                     value={serviceProfile.id}
                                                                                     key={serviceProfile.id}
-                                                                                  >{serviceProfile.name+ ' '+ serviceProfile.server}
+                                                                                  >{serviceProfile.name}
                                                                                   </Option>))
     const [form] = Form.useForm()  
     const organizationsOnSelect: any = []

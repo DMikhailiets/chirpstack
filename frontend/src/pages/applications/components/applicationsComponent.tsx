@@ -46,11 +46,13 @@ const Applications: React.FC<applicationComponentProps> = ({  organizations, cre
                                                                 style={{ marginLeft: 15, marginRight: 15, marginTop: 15, width: 270 }}
                                                                 title={application.name}
                                                              >
+                                                                 <div style={{display: 'flex', flexDirection: 'column', alignItems: 'flex-start'}}>
                                                                 <p>id: {application.id}</p>
                                                                 <p>description: {application.description}</p>
                                                                 <p>organizationID: {application.organizationID}</p>
-                                                                <p>serviceProfileID: {application.serviceProfileID}</p>
+                                                                
                                                                 <p>serviceProfileName: {application.serviceProfileName}</p>
+                                                                </div>
                                                             </Card>
                                                             )
                     }
