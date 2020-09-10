@@ -99,34 +99,22 @@ export const createOrganization = (data: any) => (dispatch: redux.Dispatch) => {
     console.log(data)
    
     return new Promise((reslove: any, reject: any) => {
-        organizationsAPI.createOrganization(
-            {
-                "organization": {
-                  "canHaveGateways": data.canHaveGateways,
-                  "displayName": data.displayName,
-                  "name": data.name
-                }
-              }
-        )
-            .then(() => {
-                Notification({
-                    text: "Organization was created!)",
-                    type: 'success',
-                    title: "Success!",
-                    duration: 5
-                })
-            })
-            .then(() => {
-                organizationsAPI.getOrganizations()
-            })
-            .catch((err) => {
-                Notification({
-                    text: err,
-                    type: 'error',
-                    title: "Oops...",
-                    duration: 5
-                })
-            })
+        try {
+            let response = organizationsAPI.createOrganization(
+                {
+                    "organization": {
+                      "canHaveGateways": data.canHaveGateways,
+                      "displayName": data.displayName,
+                      "name": data.name
+                    }
+                  }
+                )
+            organizationsAPI.getOrganizations()
+            return response
+            }
+            catch(error){
+        
+            } 
     })
 }
 

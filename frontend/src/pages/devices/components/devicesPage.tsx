@@ -44,7 +44,7 @@ const devicesPage:React.FC<devicesPageProps> = memo(({getApplications, applicati
             {
                 devices === null  
                 ? <Card 
-                style={{ marginLeft: 15, marginRight: 15, width: '100%', height: '80vh' }}
+                style={{ marginLeft: 15, marginRight: 15, width: '100%', height: '100vh' }}
                 loading={devices === null} 
             /> 
                 : <div style={{display: 'flex', flexWrap: 'wrap'}}>
@@ -76,7 +76,8 @@ const devicesPage:React.FC<devicesPageProps> = memo(({getApplications, applicati
                 </Card>
                                                             )
                     }
-                  </div> 
+                  </div>
+                  
             }
         </div>
         </ErrorBoundary>

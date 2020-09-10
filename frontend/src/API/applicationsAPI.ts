@@ -17,7 +17,7 @@ const applicationsAPI = {
             } else if (err.request){
                 throw new Error(err),
                 Notification({
-                    text: err.response.data.error,
+                    text: err.request.data.error,
                     type: 'error',
                     title: "Server not found"
                   })

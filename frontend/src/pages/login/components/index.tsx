@@ -10,7 +10,7 @@ import { NavLink, Redirect } from 'react-router-dom'
 const LoginForm = (props: any) => {
   const[disabled, setButtonType] = useState(false)
   if(localStorage.token){//localStorage.token
-    return <Redirect to='/home'/>
+    return <Redirect to='/home/organizations'/>
   }
   const onFinish = (values: any) => {
     setButtonType(true)

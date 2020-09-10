@@ -5,15 +5,39 @@ import Notification from '../components/Notification';
 
 
 export const organizationsAPI = {
-    createOrganization:  (organizationData: any) => {
-        let response = axios.post('/api/chirpOrganization', organizationData)
-            .then((res: any) => res
-            )
-            .catch((error: Error) => {
-                throw new Error(),
-                console.log(error)
-            })
-        return response    
+    createOrganization:  async (organizationData: any) => {
+        try {
+            let response = await axios.post('/api/chirpOrganization', organizationData)
+            Notification({
+                text: 'Application was created!',
+                type: 'success',
+                title: "Success!"
+              })
+            return (response)
+        } catch(err) {
+            if(err.response){
+                throw new Error(err),
+                Notification({
+                    text: err.response.data.error,
+                    type: 'error',
+                    title: "Access denied or internal service error was received"
+                  })
+            } else if (err.request){
+                throw new Error(err),
+                Notification({
+                    text: err.response.data.error,
+                    type: 'error',
+                    title: "Server not found"
+                  })
+            } else {
+                throw new Error(err),
+                Notification({
+                    text: 'Something went wrong',
+                    type: 'error',
+                    title: "Oops..."
+                  })
+            }
+        }
     },
     getOrganizations: () => {
         let response = axios.get('/api/chirpOrganization')

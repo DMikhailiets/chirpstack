@@ -40,12 +40,11 @@ export const loginUser = (authData: any) =>  (dispatch: redux.Dispatch) =>  {
                 title: "Success!",
                 duration: 5
             })
-        
         return response
         })
         .catch((error: any) => {
             reject()
-            notification({text: "Something went wrong...",
+            notification({text: "Invalid email or password",
             type: 'error',
             title: "Oops...",
             duration: 5})

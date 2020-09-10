@@ -5,6 +5,8 @@ import { Provider } from 'react-redux'
 import { Route } from 'react-router-dom' 
 import { LoginPage, Home } from './pages/index'
 import 'antd/dist/antd.css'
+//import './anotherCSS.less'
+
 
 function App() {
   return (
