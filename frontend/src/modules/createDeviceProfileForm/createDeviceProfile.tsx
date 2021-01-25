@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Form, Input, Button, Tooltip, Switch, Modal, Select, Row, Col, Layout } from 'antd'
 import style from './createApplicationForm.module.scss'
 import { NumericInput } from '../../components'
+import TextArea from 'antd/lib/input/TextArea'
 
 const { Option } = Select
 
@@ -17,27 +18,43 @@ type CreateDeviceProfile = {
   visible: boolean
 }
 
-
-
+const decoderString = `
+// Decode decodes an array of bytes into an object.
+//  - fPort contains the LoRaWAN fPort number
+//  - bytes is an array of bytes, e.g. [225, 230, 255, 0]
+//  - variables contains the device variables e.g. {"calibration": "3.5"} (both the key / value are of type string)
+// The function must return an object, e.g. {"temperature": 22.5}
+function Decode(fPort, bytes, variables) {
+  return {};
+}`
+const encoderString = `
+// Encode encodes the given object into an array of bytes.
+//  - fPort contains the LoRaWAN fPort number
+//  - obj is an object, e.g. {"temperature": 22.5}
+//  - variables contains the device variables e.g. {"calibration": "3.5"} (both the key / value are of type string)
+// The function must return an array of bytes, e.g. [225, 230, 255, 0]
+function Encode(fPort, obj, variables) {
+  return [];
+}`
 
 export const CreateDeviceProfileForm: React.FC<CreateDeviceProfile> = ({ organizations, visible,  createDeviceProfile, networkServers, setNewDeviceProfile, ...props}) => { 
-    let networkServersOnSelect: any = []
-    networkServers.forEach((networkServer: any) => networkServersOnSelect.push(<Option 
-                                                                                    value={networkServer.id}
-                                                                                    key={networkServer.id}
-                                                                                >{networkServer.name+ ' '+ networkServer.server}
-                                                                                </Option>))
+  const [isCustomCodacVisible, setIsCustomCodacVisible] = useState(false)  
+  // const [decoderString, setDecoderString] = useState(`
+  let networkServersOnSelect: any = []
+    networkServers.forEach((networkServer: any) => networkServersOnSelect.push(
+      <Option value={networkServer.id}  key={networkServer.id}>
+        {networkServer.name+ ' '+ networkServer.server}
+      </Option>))
     const [form] = Form.useForm()  
     const organizationsOnSelect: any = []
-    organizations.forEach((organization: any) => organizationsOnSelect.push(<Option 
-                                                                                value={organization.id}
-                                                                                key={organization.id}
-                                                                            >{organization.displayName}
-                                                                            </Option>))
+    organizations.forEach((organization: any) => organizationsOnSelect.push(
+      <Option value={organization.id} key={organization.id}>
+        {organization.displayName}
+      </Option>))
     const[disabled, setButtonType] = useState(false)
 
     const onFinish = (values: any) => {
-        console.log(values)
+      console.log(values)
         createDeviceProfile(values)
         form.resetFields()
         setNewDeviceProfile(false)
@@ -58,6 +75,10 @@ export const CreateDeviceProfileForm: React.FC<CreateDeviceProfile> = ({ organiz
       form={form}
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
+      initialValues={{
+        payloadDecoderScript: decoderString,
+        payloadEncoderScript: encoderString
+      }}
     >
     <Form.Item 
         name="name" 
@@ -193,9 +214,41 @@ export const CreateDeviceProfileForm: React.FC<CreateDeviceProfile> = ({ organiz
             onChange={handleChange}
             defaultValue={''}
           >
-            <Option key={'Cayenne LPP'} value={'Cayenne LPP'}>Cayenne LPP</Option>
-            
+            <Option key={'Cayenne LPP'} value={'CAYENNE_LPP'}>
+              <p onClick={() => setIsCustomCodacVisible(false)}>Cayenne LPP</p>
+            </Option>
+            <Option key={'None'} value={''}>
+              <p onClick={() => setIsCustomCodacVisible(false)}>None</p>
+            </Option>
+            <Option key={'Custom'} value={'CUSTOM_JS'} >
+              <p onClick={() => setIsCustomCodacVisible(!isCustomCodacVisible)}>Custom JavaScript codec functions</p>
+            </Option>
           </Select>
+        </Form.Item>
+        <Form.Item>
+        {
+            isCustomCodacVisible ?
+            <>
+            <Form.Item
+              name="payloadDecoderScript"
+              label="Payload decoder script" 
+            >
+              <TextArea
+                autoSize={{ minRows: 10, maxRows: 500 }}
+              />
+            </Form.Item>
+            <Form.Item
+              name="payloadEncoderScript"
+              label="Payload encoder script" 
+            >
+              <Input.TextArea
+                autoSize={{ minRows: 10, maxRows: 500 }}
+              />
+            </Form.Item>
+          
+            </>
+             : <></>
+          }
         </Form.Item>
       <Form.Item 
       >
