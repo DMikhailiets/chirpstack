@@ -1,0 +1,39 @@
+.main_page {
+    height: 100vh;
+    width: 100vw;
+    background-color: indigo;
+    color: white;
+}
+
+.user_side_bar_dropped {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    padding: 5px 5px;
+}
+
+.user_side_bar {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    color: white;
+    padding: 5px 5px;
+}
+
+.user_side_bar_content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: white;
+}
+
+.avatext {
+    color: white;
+}
+
+.user_side_bar_collapsed {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

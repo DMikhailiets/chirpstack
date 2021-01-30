@@ -1,9 +1,10 @@
 import React, {useState, useEffect, memo} from 'react'
 import ErrorBoundary from '../../../core/ErrorBoundary'
 import style from './serviceProfile.module.scss'
-import { Empty, Card, PageHeader } from 'antd'
+import { Empty, Card, PageHeader, Table, Badge, Tag } from 'antd'
 import { PlusCircleTwoTone } from '@ant-design/icons'
 import { CreateServiceProfileForm } from '../../../modules'
+import Moment from 'moment'
 
 type ServiceProfileProps = {
     getServiceProfiles: Function,
@@ -38,23 +39,31 @@ const ServiceProfile: React.FC<ServiceProfileProps> = ({getOrganizations, organi
                 style={{ marginLeft: 15, marginRight: 15, width: '100%', height: '80vh' }}
                 loading={serviceProfiles === null} 
             /> 
-                : <div style={{display: 'flex', flexWrap: 'wrap' }}>
+                : <>
                     {
                     serviceProfiles.length === 0
                     ? <div style={{display: 'flex', justifyContent: 'center', flexGrow: 1}}><Empty/></div> 
-                    : serviceProfiles.map((serviceProfile: any) => 
-                                                             <Card
-                                                                style={{ marginLeft: 15, marginRight: 15, marginTop: 15, width: 270 }}
-                                                                title={serviceProfile.name}
-                                                             >
-                                                                 <div style={{display: 'flex', flexDirection: 'column', alignItems: 'flex-start'}}>
-                                                                 <p>networkServerID: {serviceProfile.networkServerID}</p>
-                                                                 <p>organizationID: {serviceProfile.organizationID}</p>
-                                                                 </div>
-                                                            </Card>
-                                                            )
+                    : <Table style={{padding: '25px'}} className="components-table-demo-nested" columns={[
+                        { 
+                            title: 'Organization name', dataIndex: 'name', key: 'id', render: text => <a>{text}</a> 
+                        },
+                        {
+                            title: 'Network server id', width: '10%', align:'center', dataIndex: 'networkServerID', key: 'id', render: text => <Tag color='magenta'>{text}</Tag>
+                        },
+                        {
+                            title: 'Organization id', width: '10%', align:'center', dataIndex: 'organizationID', key: 'id', render: text => <Tag color='green'>{text}</Tag>
+                        },
+                        { 
+                            title: 'Created', width: '7%', align:'center', dataIndex: 'createdAt', key: 'id', render: date => <Tag color='geekblue'>{Moment(date).format('DD.MM.YYYY')}</Tag>
+                        },
+                        { 
+                            title: 'Updated',  width: '7%', align:'center', dataIndex: 'updatedAt', key: 'id', render: date => <Tag color='blue'>{Moment(date).format('DD.MM.YYYY')}</Tag>
+                        },
+                    ]}
+                    //expandable={{ expandedRowRender }}
+                    dataSource={serviceProfiles} bordered={true}/>
                     }
-                  </div> 
+                  </> 
             }
         </div>
         </ErrorBoundary>

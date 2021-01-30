@@ -25,47 +25,32 @@ export let networkServersReducer = (state: any = initialState, action: any) => {
     }
 } 
 
-
 const setNetworkServers = (networkServers: any) => ({type: 'SET_NETWORK_SERVERS', networkServers})
 const setServiceProfiles = (serviceProfiles: any) => ({type: 'SET_SERVICE_PROFILES', serviceProfiles})
 
 export let getNetworkServers = () => async (dispatch: redux.Dispatch) => {
-   try {
     let response = await serviceProfilesAPI.getNetworkServers()
     dispatch(setNetworkServers(response))
-   } catch(err){
-      console.log(err)
-   } 
 }
 
 export let getServiceProfiles = () => async (dispatch: redux.Dispatch) => {
-    try {
-     let response = await serviceProfilesAPI.getServiceProfiles()
-     dispatch(setServiceProfiles(response))
-    } catch(err){
-        console.log(err)
-    } 
- }
+    let response = await serviceProfilesAPI.getServiceProfiles()
+    dispatch(setServiceProfiles(response))
+}
  
 export let createServiceProfile = (serviceProfile: any) => async (dispatch: redux.Dispatch) => {
-    try {
-     let response = await serviceProfilesAPI.createServiceProfiles({
-        "serviceProfile": {
-            "addGWMetaData":  serviceProfile.addGWMetaData === undefined ? false : true,
-            "name":serviceProfile.name,
-            "networkServerID": "29",
-            "organizationID": serviceProfile.organizationID,
-            "nwkGeoLoc": serviceProfile.nwkGeoLoc=== undefined ? false : true,
-          }
-      })
-     response = await serviceProfilesAPI.getServiceProfiles()
-     dispatch(setServiceProfiles(response))
-     return response 
-    } catch(error){
-        
-    } 
-    getServiceProfiles()
- }
+    await serviceProfilesAPI.createServiceProfiles({
+    "serviceProfile": {
+        "addGWMetaData":  serviceProfile.addGWMetaData === undefined ? false : true,
+        "name": serviceProfile.name,
+        "networkServerID": serviceProfile.networkServerID,
+        "organizationID": serviceProfile.organizationID,
+        "nwkGeoLoc": serviceProfile.nwkGeoLoc=== undefined ? false : true,
+        }
+    })
+    let response = await serviceProfilesAPI.getServiceProfiles()
+    dispatch(setServiceProfiles(response))
+}
 
 export default networkServersReducer
 

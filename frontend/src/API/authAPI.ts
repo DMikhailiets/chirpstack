@@ -1,15 +1,14 @@
-
+import Notification from '../components/Notification';
 import { default as axios } from '../core/axios';
+import errorHandler from './utils/errorHandler';
 
 export const authAPI = {
-    authUser:  (authData: any) => {
-        let response =  axios.post('/api/chirpLogin', authData)
-            .then((res: any) => res
-            )
-            .catch((error: any) => {
-              throw new Error('bla')
-            })
-            return response
-    },
+    authUser:  async (authData: any) => {
+		try {
+			return await axios.post('/api/chirpLogin', authData)
+		} catch (err) { 
+			return errorHandler (err)
+		}
+	}
 }
 export default authAPI

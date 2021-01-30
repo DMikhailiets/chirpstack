@@ -20,44 +20,36 @@ export let deviceProfilesReducer = (state: any = initialState, action: any) => {
 const setDeviceProfiles = (deviceProfiles: any) => ({type: 'SET_DEVICE_PROFILES', deviceProfiles})
 
 export let getDeviceProfiles = () => async (dispatch: redux.Dispatch) => {
-   try {
     let response = await deviceProfilesAPI.getDeviceProfiles()
-    dispatch(setDeviceProfiles(response))
-   } catch(err){
-      console.log(err)
-   } 
+    if (response) {
+        dispatch(setDeviceProfiles(response))
+    }
 }
 
 export let createDeviceProfile = (deviceProfile: any) => async (dispatch: redux.Dispatch) => {
-    try {
-     let response = await deviceProfilesAPI.createDeviceProfiles({ 
-         deviceProfile: {...deviceProfile}
-        // deviceProfile: {
-        //  /*Device-profile name*/ 
-        //  name: deviceProfile.name, //required
-        //  /*Lorawan version*/
-        //  macVersion: deviceProfile.macVersion, //TZ 
-        //  /*Class*/
-        //  regParamsRevision: deviceProfile.regParamsRevision,//TZ (A,B)
-        //  /*Device support OTAA*/  
-        //  supportsJoin: deviceProfile.supportsJoin,//TZ 
-        //  /*RX2 channel frequency (Hz)*/
-        //  rxFreq2: deviceProfile.rxFreq2,//TZ int
-        //  /*Factory-preset frequencies (Hz)*/
-        //  //"factoryPresetFreqs": [parseInt(deviceProfile.factoryPresetFreqs)],
-        //  /*Payload codec*/
-        //  payloadCodec: deviceProfile.payloadCodec,
-        //  networkServerID: deviceProfile.networkServerID, //required
-        //   organizationID: deviceProfile.organizationID  //required
-        // }
-      })
-     response = await deviceProfilesAPI.getDeviceProfiles()
-     dispatch(setDeviceProfiles(response))
-     return response 
-    } catch(error){
-        
-    } 
+    let response = await deviceProfilesAPI.createDeviceProfiles({ 
+        deviceProfile: {...deviceProfile}
+    // deviceProfile: {
+    //  /*Device-profile name*/ 
+    //  name: deviceProfile.name, //required
+    //  /*Lorawan version*/
+    //  macVersion: deviceProfile.macVersion, //TZ 
+    //  /*Class*/
+    //  regParamsRevision: deviceProfile.regParamsRevision,//TZ (A,B)
+    //  /*Device support OTAA*/  
+    //  supportsJoin: deviceProfile.supportsJoin,//TZ 
+    //  /*RX2 channel frequency (Hz)*/
+    //  rxFreq2: deviceProfile.rxFreq2,//TZ int
+    //  /*Factory-preset frequencies (Hz)*/
+    //  //"factoryPresetFreqs": [parseInt(deviceProfile.factoryPresetFreqs)],
+    //  /*Payload codec*/
+    //  payloadCodec: deviceProfile.payloadCodec,
+    //  networkServerID: deviceProfile.networkServerID, //required
+    //   organizationID: deviceProfile.organizationID  //required
+    // }
+    })
+    dispatch(setDeviceProfiles(await deviceProfilesAPI.getDeviceProfiles()))
+    return response 
  }
 
 export default deviceProfilesReducer
-

@@ -15,7 +15,7 @@ const LoginForm = (props: any) => {
   const onFinish = (values: any) => {
     setButtonType(true)
     props.loginUser(values)
-    .then((data: any) => window.location.reload())
+    .then((data: any) => '')
     .finally(() => setButtonType(false))
 }
   const onFinishFailed = (errorInfo: any) => {
@@ -23,13 +23,12 @@ const LoginForm = (props: any) => {
   }
 
   return (
-    
-    <Layout className={style.content_wrapper} style={{ minHeight: '100vh' }}>
-      <Row>
-        <Col span={8}></Col>  
+    <Layout className={style.content_wrapper} style={{ height: '100vh' }}>
+      <Row style={{height: '100%'}}>
+        <Col span={8}/>  
         <Col className={style.login_form_wrapper} span={8}>
           <Block className={style.block}>
-              <div>
+            <div>
                 <h2>Join your account</h2>
               </div> 
               <Form
@@ -58,9 +57,8 @@ const LoginForm = (props: any) => {
                     Submit
                   </Button>
                 </Form.Item>
-              </Form>        
+              </Form>
           </Block>
-          
         </Col>  
         <Col span={8}></Col>  
       </Row> 

@@ -4,6 +4,8 @@ import { NavLink, Redirect } from 'react-router-dom'
 import { Route } from 'react-router-dom'
 import { ServiceProfilesPage, DevicesPage, Organizations, ApplicationsPage, DeviceProfilesPage } from '../../../pages'
 import ErrorBoundary from '../../../core/ErrorBoundary';
+import style from './style.module.scss'
+import { Avatar } from 'evergreen-ui'
 import {
   LogoutOutlined,
   AppstoreOutlined,
@@ -38,6 +40,17 @@ const Home = (props:any) => {
                 <Sider width={'12vw'}  collapsedWidth={80} collapsed={collapsed} onCollapse={changeEditMode} onMouseEnter={() => (setEditMode(false))} onMouseLeave={() => (setEditMode(true))}>
                 <div className="logo" />
                 <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline"> 
+                {
+                collapsed 
+                ? <div className={style.user_side_bar_dropped}key="8"><div className={style.user_side_bar_collapsed}>
+                   <Avatar name={localStorage.name} size={30}/>
+                  </div>
+                  </div>
+                : <div style={{marginLeft: '5px'}} className={style.user_side_bar}>
+                    <Avatar name={localStorage.name} size={30}/>
+              <span className={style.avatext} style={{marginLeft: '5px'}}>{localStorage.name}</span>
+                  </div>
+              }
                   <Menu.Item key="1">
                     <NavLink to="/home/organizations">
                     <AppstoreOutlined />

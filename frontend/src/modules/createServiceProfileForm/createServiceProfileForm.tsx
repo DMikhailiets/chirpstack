@@ -24,7 +24,7 @@ type CreateOrganizationType = {
 
 export const CreateServiceProfileForm: React.FC<CreateOrganizationType> = ({ getServiceProfiles, organizations, visible, networkServers, createServiceProfile, setNewServiceProfileFlag}) => { 
     let networkServersOnSelect: any = []
-    networkServers.forEach((networkServer: any) => networkServersOnSelect.push(<Option value={networkServer.name}key={networkServer.id}>{networkServer.name+ ' '+ networkServer.server}</Option>))
+    networkServers.forEach((networkServer: any) => networkServersOnSelect.push(<Option value={networkServer.id}key={networkServer.id}>{networkServer.name+ ' '+ networkServer.server}</Option>))
     const [form] = Form.useForm()  
     const organizationsOnSelect: any = []
     organizations.forEach((organization: any) => organizationsOnSelect.push(<Option value={organization.id}key={organization.id}>{organization.displayName}</Option>))

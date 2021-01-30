@@ -1,8 +1,7 @@
 
 import { default as axios } from '../core/axios';
 import Notification from '../components/Notification';
-
-
+import errorHandler from './utils/errorHandler';
 
 export const organizationsAPI = {
     createOrganization:  async (organizationData: any) => {
@@ -15,55 +14,35 @@ export const organizationsAPI = {
               })
             return (response)
         } catch(err) {
-            if(err.response){
-                throw new Error(err),
-                Notification({
-                    text: err.response.data.error,
-                    type: 'error',
-                    title: "Access denied or internal service error was received"
-                  })
-            } else if (err.request){
-                throw new Error(err),
-                Notification({
-                    text: err.response.data.error,
-                    type: 'error',
-                    title: "Server not found"
-                  })
-            } else {
-                throw new Error(err),
-                Notification({
-                    text: 'Something went wrong',
-                    type: 'error',
-                    title: "Oops..."
-                  })
-            }
+            errorHandler(err)
         }
     },
-    getOrganizations: () => {
-        let response = axios.get('/api/chirpOrganization')
-            .then((res: any) => res)
-            .catch((error: any) => {
-                throw new Error(),
-                Notification({
-                    text: error.response.data.error,
-                    type: 'error',
-                    title: "Oops..."
-                  })
-                })
-        return response
+    getOrganizations: async () => {
+        try {
+            return axios.get('/api/chirpOrganization')
+        } catch (err) {
+            errorHandler(err)
+        }
     },
     getOrganizationsUsers: (id:any) => {
-        console.log(id)
-        let response = axios.get(`api/listUsersOrg/${id}`)
-            .then((res: any) => res)
-            .catch((error: Error) => {throw new Error()})
-        return response
+        try {
+            return axios.get(`api/listUsersOrg/${id}`)
+        } catch (err) {
+            errorHandler(err)
+        }
     },
-    createUser: (data:any) => {
-        let response = axios.post(`api/addUserToOrg`, data)
-            .then((res: any) => res)
-            .catch((error: Error) => {throw new Error()})
-        return response
+    createUser: async (data:any) =>  {
+        try {
+            const response = await axios.post(`api/addUserToOrg`, data)
+            Notification({
+                text: 'User was created!',
+                type: 'success',
+                title: "Success!"
+              })
+            return response
+        } catch (err) {
+            errorHandler(err)
+        }
     }
 }
 export default organizationsAPI

@@ -58,7 +58,7 @@ const CreateOrganizationForm: React.FC<CreateOrganizationType> = ({getOrganizati
         name="displayName"
         rules={[{ required: true, message: 'Please input your username!' }]}
       >
-        <Input />
+        <Input placeholder="username"/>
       </Form.Item>
       {/* <Form.Item
         label="id"

@@ -4,8 +4,8 @@
     background-color: white;
 }
 
-.login_form_wrapper{
-    min-height: 100vh;
+.login_form_wrapper {
+    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -13,5 +13,6 @@
 }
 
 .block {
-    margin-top: 25vh;
+    height: 30%;
+    margin-top: 30vh;
 }

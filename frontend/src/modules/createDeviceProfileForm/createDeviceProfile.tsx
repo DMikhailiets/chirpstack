@@ -181,7 +181,21 @@ export const CreateDeviceProfileForm: React.FC<CreateDeviceProfile> = ({ organiz
         }),]}
     >    
    
-        <Input maxLength={10}/>
+   <Select
+            style={{ width: '100%' }}
+            placeholder=""
+            onChange={handleChange}
+            defaultValue={[]}
+    >
+            <Option key={'868100000'} value={'868100000'}>868100000</Option>
+            <Option key={'868300000'} value={'868300000'}>868300000</Option>
+            <Option key={'868500000'} value={'868500000'}>868500000</Option>
+            <Option key={'867100000'} value={'867100000'}>867100000</Option>
+            <Option key={'867300000'} value={'867300000'}>867300000</Option>
+            <Option key={'867500000'} value={'867500000'}>867500000</Option>
+            <Option key={'867700000'} value={'867700000'}>867700000</Option>
+            <Option key={'867900000'} value={'867900000'}>867900000</Option>
+          </Select>
      
     </Form.Item>
     {/* <Form.Item 

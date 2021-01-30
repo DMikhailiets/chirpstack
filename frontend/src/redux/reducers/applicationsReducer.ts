@@ -20,17 +20,14 @@ export let applicationsReducer = (state: any = initialState, action: any) => {
 const setApplictions = (applications: any) => ({type: 'SET_APPLICATIONS', applications})
 
 export let getApplications = () => async (dispatch: redux.Dispatch) => {
-   try {
     let response = await applicationsAPI.getApplications()
-    dispatch(setApplictions(response))
-   } catch(err){
-      console.log(err)
-   } 
+    if (response) {
+        dispatch(setApplictions(response))
+    }
 }
 
 export let createApplication = (application: any) => async (dispatch: redux.Dispatch) => {
-    try {
-     let response = await applicationsAPI.createApplication({
+    await applicationsAPI.createApplication({
         "application": {
           "description": application.description,
           "name": application.name,
@@ -41,12 +38,7 @@ export let createApplication = (application: any) => async (dispatch: redux.Disp
           //"payloadEncoderScript": "string",
         }
       })
-     response = await applicationsAPI.getApplications()
-     dispatch(setApplictions(response))
-     return response 
-    } catch(error){
-        
-    } 
+    dispatch(setApplictions(await applicationsAPI.getApplications()))
  }
 
 export default applicationsReducer

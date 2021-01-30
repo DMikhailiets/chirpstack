@@ -1,14 +1,10 @@
-import { Redirect } from 'react-router-dom';
-import { organizationsAPI } from '../../API/organizationsAPI';
+import { organizationsAPI } from '../../API/organizationsAPI'
 import redux from 'redux'
-import React from 'react';
-import Notification from '../../components/Notification';
 
 const initialstate = {
-    organizations: [],
+    organizations: null,
     organizationsUsers: []
 }
-
 
 const organizationsReducer = (state: any = initialstate, action: any) => {
     switch(action.type){
@@ -18,14 +14,13 @@ const organizationsReducer = (state: any = initialstate, action: any) => {
             }
         }
         case 'SET_ORGANIZATIONS_USERS': {
-                //let index = state.organizations.find((organization: any) => organization.id === action.id).id
-                //let index = state.organizations.findIndex((organization: any) => organization.id === action.id)
-                //console.log(index)
             return {
-                ...state, organizationsUsers: { ...state.organizationsUsers , 
-                     [action.id]: {
-                         users: action.users.data.result
-                     }
+                ...state, 
+                organizationsUsers: { 
+                    ...state.organizationsUsers, 
+                    [action.id]: {
+                        users: action.users.data.result
+                    }
                 } 
             }
         }
@@ -36,87 +31,51 @@ const organizationsReducer = (state: any = initialstate, action: any) => {
 const setOrganizations = (organizations: any) => ({type: 'SET_ORGANIZATIONS', organizations})
 const setOrganizationsUsers = (users: any, id: any) => ({type: 'SET_ORGANIZATIONS_USERS', users, id})
 
-export const getOrganizations = () => (dispatch: redux.Dispatch) => {
-    return new Promise((reslove: any, reject: any) => {
-        organizationsAPI.getOrganizations()
-            .then((response: any) =>{
-                dispatch(setOrganizations(response))
-            })
-            .catch((err) => {
-                console.log(err)
-            })
-    })
+export const getOrganizations = () => async (dispatch: redux.Dispatch) => {
+    const response = await organizationsAPI.getOrganizations()
+    if (response) {
+        dispatch(setOrganizations(response))
+    }
 }
 
-export const getOrganizationsUsers = (id: any) => (dispatch: redux.Dispatch) => {
-    return new Promise((reslove: any, reject: any) => {
-        organizationsAPI.getOrganizationsUsers(id)
-            .then((response: any) =>{
-                dispatch(setOrganizationsUsers(response, id))
-            })
-            .catch((err) => {
-                console.log(err)
-            })
-    })
+export const getOrganizationsUsers = (id: any) => async (dispatch: redux.Dispatch) => {
+    const response = await organizationsAPI.getOrganizationsUsers(id)
+    if (response) {
+        dispatch(setOrganizationsUsers(response, id))
+    }
 }
 
-export const createUser = (userData: any) => (dispatch: redux.Dispatch) => {
-    return new Promise((reslove: any, reject: any) => {
-        let organizations: any = []
-        userData.Organizations.map((org: any) => organizations.push({
+export const createUser = (userData: any) => async (dispatch: redux.Dispatch) => {
+    let organizations: any = []
+    userData.Organizations.map((org: any) => organizations.push({
+        "isAdmin": true,
+        "isDeviceAdmin": true,
+        "isGatewayAdmin": true,
+        "organizationID": org
+    }))
+    await organizationsAPI.createUser({
+        "organizations": organizations,
+        "password": userData.password,
+        "user": {
+            "email": userData.email,
+            "isActive": true,
             "isAdmin": true,
-            "isDeviceAdmin": true,
-            "isGatewayAdmin": true,
-            "organizationID": org
-        }))
-        organizationsAPI.createUser({
-                "organizations": organizations,
-                "password": userData.password,
-                "user": {
-                  "email": userData.email,
-                  "isActive": true,
-                  "isAdmin": true,
-                  "note": "string",
-                  "sessionTTL": 0
-                }
-        })
-            .then((response: any) =>{
-                getOrganizations()
-                Notification({
-                    text: "User was created!)",
-                    type: 'success',
-                    title: "Success!",
-                    duration: 5
-                })
-            })
-            .catch((err) => {
-                console.log(err)
-            })
+            "note": "string",
+            "sessionTTL": 0
+        }
     })
 }
 
-export const createOrganization = (data: any) => (dispatch: redux.Dispatch) => {
-    console.log(data)
-   
-    return new Promise((reslove: any, reject: any) => {
-        try {
-            let response = organizationsAPI.createOrganization(
-                {
-                    "organization": {
-                      "canHaveGateways": data.canHaveGateways,
-                      "displayName": data.displayName,
-                      "name": data.name
-                    }
-                  }
-                )
-            organizationsAPI.getOrganizations()
-            return response
-            }
-            catch(error){
-        
-            } 
+export const createOrganization = (data: any) => async (dispatch: redux.Dispatch) => {
+    await organizationsAPI.createOrganization({
+        "organization": {
+            "canHaveGateways": data.canHaveGateways,
+            "displayName": data.displayName,
+            "name": data.name
+        }
     })
+    let response = await organizationsAPI.getOrganizations()
+    dispatch(setOrganizations(response))
 }
-
 
 export default organizationsReducer
